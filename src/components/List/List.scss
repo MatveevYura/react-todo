@@ -1,0 +1,31 @@
+.list {
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 12px;
+    cursor: pointer;
+    margin-bottom: 3px;
+
+    &.active {
+      background: #fff;
+      box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.04);
+      border-radius: 4px;
+    }
+    i {
+      display: inline-flex;
+      margin-right: 10px;
+      img {
+        opacity: 0.6;
+      }
+    }
+  }
+  &__dott {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+  }
+}
