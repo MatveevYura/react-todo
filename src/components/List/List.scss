@@ -1,14 +1,30 @@
 .list {
+  $self: &;
+
   margin-bottom: 30px;
-  display: flex;
-  flex-direction: column;
 
   li {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     padding: 10px 12px;
     cursor: pointer;
-    margin-bottom: 3px;
+    transition: background-color 0.15s ease-in-out;
+    &:hover {
+      background: rgba(255, 255, 255, 0.5);
+    }
+    span {
+      flex: 1;
+    }
+    &:hover #{$self}__remove-icon {
+      opacity: 0.3;
+    }
+    #{$self}__remove-icon {
+      opacity: 0;
+      transition: opacity 0.15s ease-in-out;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
 
     &.active {
       background: #fff;

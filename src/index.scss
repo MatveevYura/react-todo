@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat+Subrayada:regular,700");
+@import url("https://fonts.googleapis.com/css?family=Roboto:regular,500&display=swap");
+
 * {
   margin: 0;
   padding: 0;
@@ -30,6 +33,8 @@ body {
     padding: 60px 20px;
   }
   &__tasks {
+    flex: 1;
+    padding: 60px;
   }
 }
 
