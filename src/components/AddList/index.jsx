@@ -1,18 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import List from '../List'
 import plusSvg from "../../assets/img/add.svg";
 import Badge from '../Badge'
+import axios from 'axios';
 
 import closeSvg from "../../assets/img/close.svg";
 
 
-import './AddListButton.scss'
+import './AddList.scss'
 
-const AddListButton = ({ colors, onAdd }) => {
+const AddList = ({ colors, onAdd }) => {
 
   const [visiblePopup, setVisiblePopup] = useState(false)
-  const [selectedColor, selectColor] = useState(colors[0].id)
+  const [seletedColor, selectColor] = useState(3);
   const [inputValue, setInputValue] = useState('')
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (Array.isArray(colors)) {
+      selectColor(colors[0].id)
+    }
+  }, [colors])
 
   const onClose = () => {
     setVisiblePopup(false)
@@ -25,9 +33,21 @@ const AddListButton = ({ colors, onAdd }) => {
       alert('Veedite nazvanie')
       return
     }
-    const color = colors.filter(c => c.id === selectedColor)[0].name
-    onAdd({ id: Math.random(), name: inputValue, color })
-    onClose()
+    setIsLoading(true);
+    axios
+      .post('http://localhost:3001/lists', {
+        name: inputValue,
+        colorId: seletedColor
+      })
+      .then(({ data }) => {
+        const color = colors.filter(c => c.id === seletedColor)[0].name;
+        const listObj = { ...data, color: { name: color } };
+        onAdd(listObj);
+        onClose();
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }
 
   return (
@@ -53,13 +73,13 @@ const AddListButton = ({ colors, onAdd }) => {
                 <Badge onClick={() => selectColor(color.id)}
                   key={color.id}
                   color={color.name}
-                  className={selectedColor === color.id && 'active'} />)
+                  className={seletedColor === color.id && 'active'} />)
             }
           </div>
-          <button onClick={addList} className="button">Add</button>
+          <button onClick={addList} className="button"> {isLoading ? 'Добавление...' : 'Добавить'}</button>
         </div>)}
     </div>
   )
 }
 
-export default AddListButton
+export default AddList
