@@ -1,17 +1,36 @@
 import React from 'react'
+import axios from 'axios'
+
 import editSvg from '../../assets/img/edit.svg'
 
 import './Tasks.scss'
+import AddTasksForm from './AddTasksForm'
 
-const Tasks = ({ list }) => {
+const Tasks = ({ list, onEditTitle, onAddTask }) => {
+
+  const editTitle = () => {
+    const newTitle = window.prompt('Название списка', list.name)
+    if (newTitle) {
+      onEditTitle(list.id, newTitle)
+      axios
+        .patch('http://localhost:3001/lists/' + list.id, {
+          name: newTitle
+        })
+        .catch(() => {
+          alert('Cant update list name')
+        })
+    }
+  }
+
   return (
     <div className="tasks">
       <h2 className="tasks__title">
         {list.name}
-        <img src={editSvg} alt="edit icon" />
+        <img onClick={editTitle} src={editSvg} alt="edit icon" />
       </h2>
 
       <div className="tasks__items">
+        {!list.tasks.length && <h2>Задачи отсутствуют</h2>}
         {list.tasks.map(task => (
           <div key={task.id} className="tasks__items-row">
             <div className="checkbox">
@@ -38,6 +57,7 @@ const Tasks = ({ list }) => {
 
           </div>
         ))}
+        <AddTasksForm list={list} onAddTask={onAddTask} />
       </div>
     </div >
   )

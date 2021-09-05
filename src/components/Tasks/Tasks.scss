@@ -26,12 +26,52 @@
     }
   }
 
-  &__items {
-    margin-top: 30px;
-    &-row {
+  &__form {
+    margin-top: 20px;
+    &-block {
+      .button {
+        margin-top: 15px;
+        margin-right: 10px;
+      }
+    }
+    &-new {
       display: flex;
       align-items: center;
+      cursor: pointer;
+      opacity: 0.4;
+      &:hover {
+        opacity: 0.8;
+        transition: opacity 0.15s ease-in-out;
+      }
+      img {
+        width: 16px;
+        height: 16px;
+        margin-left: 3px;
+      }
+      span {
+        font-size: 16px;
+        margin-left: 18px;
+      }
+    }
+  }
+
+  &__items {
+    margin-top: 30px;
+
+    h2 {
+      font-family: Montserrat;
+      font-weight: bold;
+      font-size: 22px;
+      color: #c9d1d3;
+      position: absolute;
+      left: 50%;
+    }
+
+    &-row {
       margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+
       input {
         width: 100%;
         border: 0;
@@ -44,7 +84,6 @@
       }
     }
   }
-
   .checkbox {
     input {
       display: none;
